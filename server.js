@@ -17,7 +17,7 @@ const {
 } = require('./utils/employeeUtils');
 
 const { userRouter } = require('./routes/userRoutes');
-const { toDoRouter } = require('./routes/todoRoutes');
+//const { toDoRouter } = require('./routes/todoRoutes');
 const { leaveRouter } = require('./routes/leaveRoutes');
 const { enumRouter } = require('./routes/enumRoutes');
 const reportRouter = require('./routes/reportRoutes');
@@ -25,7 +25,6 @@ const { employeeRouter } = require('./routes/employeeRoutes');
 const organizationRouter = require('./routes/organizationRoutes');
 const branchRouter = require('./routes/branchRoutes');
 const payGradeRouter = require('./routes/payGradeRoutes');
-const readline = require('readline');
 const { jobTitleRouter } = require('./routes/jobTitleRoutes');
 const departmentRouter = require('./routes/departmentRoutes');
 const { dependentRouter } = require('./routes/dependentRoute');
