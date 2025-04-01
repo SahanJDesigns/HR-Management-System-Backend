@@ -7,7 +7,9 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const pool = require("./config/dbConfig");
+const dotenv = require('dotenv');
 
+const port = process.env.PORT || 5000;
 const {
   createEmployee,
   updateEmployeeDetails,
