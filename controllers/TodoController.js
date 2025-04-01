@@ -1,4 +1,4 @@
-const  ToDoList = require('../models/TodoModel');
+const  ToDoList = require('../models/todoModel');
 const jwt = require('jsonwebtoken');
 const secretKey = '1234';
 
