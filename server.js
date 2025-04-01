@@ -60,7 +60,7 @@ app.put('/updateJobDetails', updateEmployeeDetails);
 app.put('/employee/:employeeId/personal', upload.single('profilePic'), updateEmployeePersonalDetails);
 
 app.use('/auth', userRouter);
-app.use('/todolist', toDoRouter);
+//app.use('/todolist', toDoRouter);
 app.use('/leave', leaveRouter);
 app.use('/enum', enumRouter);
 app.use('/report', reportRouter);
