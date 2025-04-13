@@ -73,22 +73,6 @@ app.use('/department',departmentRouter);
 app.use('/dependent',dependentRouter);
 app.use('/emergencycontact',emergencyContactRouter)
 
-// Helper function for async user input
-const getInput = async (query) => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false,
-  });
-
-  return new Promise((resolve) => {
-    rl.question(query, (answer) => {
-      rl.close();
-      resolve(answer);
-    });
-  });
-};
-
 // Endpoint to delete a dependent
 app.delete('/employee/:employee_id/dependents/:dependent_id', async (req, res) => {
   const { employee_id, dependent_id } = req.params;
@@ -121,77 +105,77 @@ app.delete('/employee/:employee_id/emergency/:person_id', async (req, res) => {
   }
 });
 
-const checkOrganizationDetails = async () => {
-  const organizationQuery = 'SELECT * FROM organization';
+// const checkOrganizationDetails = async () => {
+//   const organizationQuery = 'SELECT * FROM organization';
 
-  try {
-    const [rows] = await pool.query(organizationQuery);
-    if (rows.length === 0) {
-      console.log('No organization details found. Inserting default organization details.');
-      const insertQuery = `
-        INSERT INTO organization 
-        (organization_id, organization_name, address, registration_number, longitude, latitude)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `;
-      const organizationId = uuidv4();
-      const organizationName = 'Default Organization';
-      const address = '123 Default Street, City, Country';
-      const registrationNumber = 'REG-123456';
-      const longitude = '0.0000';
-      const latitude = '0.0000';
+//   try {
+//     const [rows] = await pool.query(organizationQuery);
+//     if (rows.length === 0) {
+//       console.log('No organization details found. Inserting default organization details.');
+//       const insertQuery = `
+//         INSERT INTO organization 
+//         (organization_id, organization_name, address, registration_number, longitude, latitude)
+//         VALUES (?, ?, ?, ?, ?, ?)
+//       `;
+//       const organizationId = uuidv4();
+//       const organizationName = 'Default Organization';
+//       const address = '123 Default Street, City, Country';
+//       const registrationNumber = 'REG-123456';
+//       const longitude = '0.0000';
+//       const latitude = '0.0000';
       
-      await pool.query(insertQuery, [organizationId, organizationName, address, registrationNumber, longitude, latitude]);
-      console.log('Default organization details inserted successfully.');
-      console.log(`Organization Name: ${organizationName}, Address: ${address}`);
-    } else {
-      console.log('Organization details exist.');
-    }
-  } catch (err) {
-    console.error('Error checking for organization details', err);
-    process.exit(1);
-  }
-};
+//       await pool.query(insertQuery, [organizationId, organizationName, address, registrationNumber, longitude, latitude]);
+//       console.log('Default organization details inserted successfully.');
+//       console.log(`Organization Name: ${organizationName}, Address: ${address}`);
+//     } else {
+//       console.log('Organization details exist.');
+//     }
+//   } catch (err) {
+//     console.error('Error checking for organization details', err);
+//     process.exit(1);
+//   }
+// };
 
-const checkAdminUser = async () => {
-  console.log('Checking for admin user');
-  const adminQuery = 'SELECT * FROM user WHERE role = "admin"';
+// const checkAdminUser = async () => {
+//   console.log('Checking for admin user');
+//   const adminQuery = 'SELECT * FROM user WHERE role = "admin"';
 
-  try {
-    const [rows] = await pool.query(adminQuery);
-    if (rows.length === 0) {
-      console.log('No admin user found. Creating default admin user.');
-      const employeeId = uuidv4();
-      const firstName = 'Admin';
-      const lastName = 'User';
-      const insertEmployeeQuery = `
-        INSERT INTO employee 
-        (employee_id, first_name, last_name)
-        VALUES (?, ?, ?)
-      `;
-      await pool.query(insertEmployeeQuery, [employeeId, firstName, lastName]);
+//   try {
+//     const [rows] = await pool.query(adminQuery);
+//     if (rows.length === 0) {
+//       console.log('No admin user found. Creating default admin user.');
+//       const employeeId = uuidv4();
+//       const firstName = 'Admin';
+//       const lastName = 'User';
+//       const insertEmployeeQuery = `
+//         INSERT INTO employee 
+//         (employee_id, first_name, last_name)
+//         VALUES (?, ?, ?)
+//       `;
+//       await pool.query(insertEmployeeQuery, [employeeId, firstName, lastName]);
   
-      const insertUserQuery = `
-        INSERT INTO user 
-        (user_id, username, password_hash, role, employee_id)
-        VALUES (?, ?, ?, ?, ?)
-      `;
-      const userId = uuidv4();
-      const username = 'admin';
-      const password = 'Admin@123';
-      const passwordHash = bcrypt.hashSync(password, 10);
-      const role = 'admin';
+//       const insertUserQuery = `
+//         INSERT INTO user 
+//         (user_id, username, password_hash, role, employee_id)
+//         VALUES (?, ?, ?, ?, ?)
+//       `;
+//       const userId = uuidv4();
+//       const username = 'admin';
+//       const password = 'Admin@123';
+//       const passwordHash = bcrypt.hashSync(password, 10);
+//       const role = 'admin';
       
-      await pool.query(insertUserQuery, [userId, username, passwordHash, role, employeeId]);
-      console.log('Default admin user created successfully.');
-      console.log(`Username: ${username}, Password: ${password}`);
-    } else {
-      console.log('Admin user exists.');
-    }
-  } catch (err) {
-    console.error('Error checking for admin user', err);
-    process.exit(1);
-  }
-};
+//       await pool.query(insertUserQuery, [userId, username, passwordHash, role, employeeId]);
+//       console.log('Default admin user created successfully.');
+//       console.log(`Username: ${username}, Password: ${password}`);
+//     } else {
+//       console.log('Admin user exists.');
+//     }
+//   } catch (err) {
+//     console.error('Error checking for admin user', err);
+//     process.exit(1);
+//   }
+// };
 
 // Initialize the server
 const initializeServer = async () => {
